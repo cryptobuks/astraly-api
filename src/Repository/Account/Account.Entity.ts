@@ -29,10 +29,14 @@ export class Account {
 
     @Field({ nullable: true })
     @prop()
-    bannerHast?: string
+    bannerHash?: string
 
     @Field({ nullable: true })
-    @prop({ default: 0 })
+    @prop({
+        default () {
+            Math.floor(Math.random() * 9999999)
+        }
+    })
     nonce!: number
 
     @Field(() => [Quest], { nullable: true })

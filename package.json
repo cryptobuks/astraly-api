@@ -18,10 +18,13 @@
 		"@typegoose/typegoose": "^9.9.0",
 		"apollo-server-koa": "^3.8.2",
 		"dotenv": "^16.0.1",
+		"eth-sig-util": "^3.0.1",
+		"ethereumjs-util": "^7.1.5",
 		"jsonwebtoken": "^8.5.1",
 		"koa": "^2.13.4",
 		"koa-bodyparser": "^4.3.0",
 		"reflect-metadata": "^0.1.13",
+		"starknet": "^3.15.0",
 		"type-graphql": "^1.1.1",
 		"winston": "^3.7.2"
 	},
