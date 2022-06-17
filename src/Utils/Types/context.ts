@@ -1,6 +1,6 @@
 
 export type AppContext = {
   jwtToken: string
-  address?: string
+  address: string
   queryArgs?: any
 }

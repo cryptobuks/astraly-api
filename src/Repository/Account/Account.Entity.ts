@@ -2,6 +2,7 @@ import { getModelForClass, prop, Ref } from '@typegoose/typegoose'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { ObjectId } from '../../Utils/Types'
 import { Quest } from '../Quest/Quest.Entity'
+import { ModelType } from '@typegoose/typegoose/lib/types'
 
 @ObjectType()
 export class Account {
@@ -44,7 +45,7 @@ export class Account {
     questCompleted?: Ref<Quest>[]
 }
 
-export const AccountModel = getModelForClass(Account, {
+export const AccountModel: ModelType<Account> = getModelForClass(Account, {
     schemaOptions: {
         timestamps: true,
         collection: 'accounts'
