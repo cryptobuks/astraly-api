@@ -8,60 +8,59 @@ import jwt from 'jsonwebtoken'
 import { buildSchema } from './Utils/schema'
 import Logger from './Utils/Logger'
 import { globals } from './Utils/Globals'
+import { initCheckpoint } from './Utils/Checkpoint'
 
 const app = new Koa()
 app.use(cors())
 app.use(
-    bodyParser({
-        formLimit: '500mb',
-        jsonLimit: '500mb',
-    })
+  bodyParser({
+    formLimit: '500mb',
+    jsonLimit: '500mb',
+  })
 )
 
-const startServer = async () => {
-    const schema = await buildSchema()
-    const server = new ApolloServer({
-        schema,
-        context: async ({ ctx }) => {
-            let jwtToken = (ctx && ctx.request.headers.authorization) || ''
+const startServer = async (): Promise<void> => {
+  const schema = await buildSchema()
+  const server = new ApolloServer({
+    schema,
+    context: async ({ ctx }) => {
+      let jwtToken = ctx?.request.headers.authorization || ''
 
-            let address = ''
+      let address = ''
 
-            if (jwtToken) {
-                try {
-                    jwtToken = jwtToken.replace('Bearer ', '')
-                    address = jwt.verify(jwtToken, globals.JWT_KEY) as string
-
-                } catch (e) {
-                    console.error('CTX, INVALID JWT')
-                }
-            }
-
-            return {
-                jwtToken,
-                address
-            }
+      if (jwtToken) {
+        try {
+          jwtToken = jwtToken.replace('Bearer ', '')
+          address = jwt.verify(jwtToken, globals.JWT_KEY) as string
+        } catch (e) {
+          console.error('CTX, INVALID JWT')
         }
-    })
+      }
 
-    app.listen({ port: globals.PORT, host: globals.HOST }, () => {
-        Logger.info(
-            `🚀 Server ready at http://${globals.HOST}:${globals.PORT}${server.graphqlPath}, ${globals.API_URL}`
-        )
-    })
+      return {
+        jwtToken,
+        address,
+      }
+    },
+  })
 
-    await server.start()
+  app.listen({ port: globals.PORT, host: globals.HOST }, () => {
+    Logger.info(`🚀 Server ready at http://${globals.HOST}:${globals.PORT}${server.graphqlPath}, ${globals.API_URL}`)
+  })
 
-    server.applyMiddleware({ app, path: `/api${server.graphqlPath}` })
+  await server.start()
 
-    const apiRouter = new KoaRouter()
+  server.applyMiddleware({ app, path: `/api${server.graphqlPath}` })
 
-    apiRouter.get('/api', (ctx) => {
-        ctx.body = 'hello captain'
-    })
+  const apiRouter = new KoaRouter()
 
-    app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
+  apiRouter.get('/api', (ctx) => {
+    ctx.body = 'hello captain'
+  })
+
+  app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
+
+  await initCheckpoint()
 }
 
-startServer()
-
+void startServer()

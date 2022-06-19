@@ -6,48 +6,48 @@ import { ModelType } from '@typegoose/typegoose/lib/types'
 
 @ObjectType()
 export class Account {
-    @Field(() => ID)
-    readonly _id!: ObjectId
+  @Field(() => ID)
+  readonly _id!: ObjectId
 
-    @Field({ nullable: true })
-    @prop({
-        required: true,
-        unique: true
-    })
-    address!: string
+  @Field({ nullable: true })
+  @prop({
+    required: true,
+    unique: true,
+  })
+  address!: string
 
-    @Field({ nullable: true })
-    @prop()
-    alias?: string
+  @Field({ nullable: true })
+  @prop()
+  alias?: string
 
-    @Field({ nullable: true })
-    @prop()
-    email?: string
+  @Field({ nullable: true })
+  @prop()
+  email?: string
 
-    @Field({ nullable: true })
-    @prop()
-    bio?: string
+  @Field({ nullable: true })
+  @prop()
+  bio?: string
 
-    @Field({ nullable: true })
-    @prop()
-    bannerHash?: string
+  @Field({ nullable: true })
+  @prop()
+  bannerHash?: string
 
-    @Field({ nullable: true })
-    @prop({
-        default () {
-            Math.floor(Math.random() * 9999999)
-        }
-    })
-    nonce!: number
+  @Field({ nullable: true })
+  @prop({
+    default() {
+      Math.floor(Math.random() * 9999999)
+    },
+  })
+  nonce!: number
 
-    @Field(() => [Quest], { nullable: true })
-    @prop({ ref: 'Quest' })
-    questCompleted?: Ref<Quest>[]
+  @Field(() => [Quest], { nullable: true })
+  @prop({ ref: 'Quest' })
+  questCompleted?: Array<Ref<Quest>>
 }
 
 export const AccountModel: ModelType<Account> = getModelForClass(Account, {
-    schemaOptions: {
-        timestamps: true,
-        collection: 'accounts'
-    }
+  schemaOptions: {
+    timestamps: true,
+    collection: 'accounts',
+  },
 })

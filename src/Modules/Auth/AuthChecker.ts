@@ -2,11 +2,10 @@ import { AuthChecker } from 'type-graphql'
 import { AppContext } from '../../Utils/Types/context'
 import { globals } from '../../Utils/Globals'
 
-
 export enum UserAccess {
   User = 'User',
   Admin = 'Admin',
-  SuperAdmin = 'SuperAdmin'
+  SuperAdmin = 'SuperAdmin',
 }
 
 export const appAuthChecker: AuthChecker<AppContext, UserAccess> = ({ context }, roles: UserAccess[]) => {
@@ -15,7 +14,7 @@ export const appAuthChecker: AuthChecker<AppContext, UserAccess> = ({ context },
   return hasUserAccess(address, roles)
 }
 
-export const hasUserAccess = (address: string | null | undefined , roles: UserAccess[]) : boolean => {
+export const hasUserAccess = (address: string | null | undefined, roles: UserAccess[]): boolean => {
   if (!address) {
     return false
   }

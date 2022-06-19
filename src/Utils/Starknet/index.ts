@@ -1,15 +1,15 @@
 import starknet from 'starknet'
 
 export const getParsedAddress = (address?: string): string | null => {
-    if (!address) {
-        return null
-    }
+  if (!address) {
+    return null
+  }
 
-    const parsedAddress = starknet.validateAndParseAddress(address)
+  const parsedAddress = starknet.validateAndParseAddress(address)
 
-    if (!parsedAddress) {
-        return null
-    }
+  if (!parsedAddress) {
+    return null
+  }
 
-    return parsedAddress.toLowerCase()
+  return parsedAddress.toLowerCase()
 }

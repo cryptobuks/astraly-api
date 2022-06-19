@@ -5,29 +5,29 @@ import { ObjectId } from '../../Utils/Types'
 
 @ObjectType()
 export class QuestHistory {
-    @Field(() => ID)
-    readonly _id!: ObjectId
+  @Field(() => ID)
+  readonly _id!: ObjectId
 
-    @Field({ nullable: true })
-    @prop()
-    idoId!: number
+  @Field({ nullable: true })
+  @prop()
+  idoId!: number
 
-    @Field(() => Quest,{ nullable: true })
-    @prop({ ref: 'Quest' })
-    quest!: Ref<Quest>
+  @Field(() => Quest, { nullable: true })
+  @prop({ ref: 'Quest' })
+  quest!: Ref<Quest>
 
-    @Field({ nullable: true })
-    @prop()
-    address!: string
+  @Field({ nullable: true })
+  @prop()
+  address!: string
 
-    @Field({ nullable: true })
-    @prop()
-    completionDate!: Date
+  @Field({ nullable: true })
+  @prop()
+  completionDate!: Date
 }
 
 export const QuestHistoryModel = getModelForClass(QuestHistory, {
-    schemaOptions: {
-        timestamps: true,
-        collection: 'questsHistory'
-    }
+  schemaOptions: {
+    timestamps: true,
+    collection: 'questsHistory',
+  },
 })

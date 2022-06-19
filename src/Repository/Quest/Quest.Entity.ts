@@ -4,17 +4,17 @@ import { ObjectId } from '../../Utils/Types'
 
 @ObjectType()
 export class Quest {
-    @Field(() => ID)
-    readonly _id!: ObjectId
+  @Field(() => ID)
+  readonly _id!: ObjectId
 
-    @Field({ nullable: true })
-    @prop()
-    idoId!: number
+  @Field({ nullable: true })
+  @prop()
+  idoId!: number
 }
 
 export const QuestModel = getModelForClass(Quest, {
-    schemaOptions: {
-        timestamps: true,
-        collection: 'quests'
-    }
+  schemaOptions: {
+    timestamps: true,
+    collection: 'quests',
+  },
 })

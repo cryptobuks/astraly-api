@@ -1,4 +1,4 @@
-const winston = require('winston');
+import winston from 'winston'
 
 const levels = {
   error: 0,
@@ -8,7 +8,7 @@ const levels = {
   debug: 4,
 }
 
-const level = () => {
+const level = (): string => {
   const env = process.env.NODE_ENV || 'development'
   const isDevelopment = env === 'development'
   return isDevelopment ? 'debug' : 'info'
@@ -29,9 +29,7 @@ winston.addColors(colors)
 const format = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
   winston.format.colorize({ all: true }),
-  winston.format.printf(
-    (info: any) => `${info.timestamp} ${info.level}: ${info.message}`,
-  ),
+  winston.format.printf((info: any) => `${info.timestamp} ${info.level}: ${info.message}`)
 )
 
 const transports = [
