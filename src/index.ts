@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import 'reflect-metadata'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'
@@ -9,6 +10,11 @@ import { buildSchema } from './Utils/schema'
 import Logger from './Utils/Logger'
 import { globals } from './Utils/Globals'
 import { initCheckpoint } from './Utils/Checkpoint'
+import { connectToDb } from './Utils/Db'
+import { initGlobals } from './Utils/Globals/init'
+import { generateQuestsData } from './Utils/Seed/generateQuestsData'
+
+initGlobals()
 
 const app = new Koa()
 app.use(cors())
@@ -20,6 +26,9 @@ app.use(
 )
 
 const startServer = async (): Promise<void> => {
+  await connectToDb(globals.DB_HOST, globals.DB_NAME)
+  await generateQuestsData()
+
   const schema = await buildSchema()
   const server = new ApolloServer({
     schema,

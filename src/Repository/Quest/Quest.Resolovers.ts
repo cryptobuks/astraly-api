@@ -3,6 +3,7 @@ import { Quest, QuestModel } from './Quest.Entity'
 import { AppContext } from '../../Utils/Types/context'
 import { AccountModel } from '../Account/Account.Entity'
 import { QuestHistoryModel } from './QuestHistory.Entity'
+import { MerkleProofsModel } from './MerkleProofs.Entity'
 
 @Resolver()
 export class QuestResolvers {
@@ -48,17 +49,11 @@ export class QuestResolvers {
       throw new Error('account not found')
     }
 
-    // TODO get proofs
-    // const proofs = JSON.parse(
-    //     fs.readFileSync(`scripts/data/proofs_${idoID}.json`),
-    //     "utf-8"
-    // )
+   const merkeProofs = await MerkleProofsModel.findOne({
+     idoId: Number(idoId),
+   }).exec()
 
-    const proofs = {
-      idoId,
-    }
-
-    const proof = proofs[address]
+    const proof = merkeProofs.data[address]
 
     if (!proof) {
       throw new Error('no proof found for address')

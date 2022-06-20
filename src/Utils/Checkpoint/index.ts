@@ -4,11 +4,12 @@ import Checkpoint, { LogLevel } from '@snapshot-labs/checkpoint'
 import * as writer from './writer'
 
 export const initCheckpoint = async (): Promise<void> => {
-  const checkpoint = new Checkpoint(config, writer, '', {
-    logLevel: LogLevel.Info,
+  const checkpoint = new Checkpoint(config, writer, `scalar Id`, {
+    logLevel: LogLevel.Error,
     prettifyLogs: process.env.NODE_ENV !== 'production',
   })
-  checkpoint.reset()
+
+  await checkpoint.reset()
 
   checkpoint.seedCheckpoints(checkpoints).then(() => checkpoint.start())
 }
