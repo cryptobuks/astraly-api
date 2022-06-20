@@ -1,11 +1,13 @@
-import starknet from 'starknet'
+import {
+  validateAndParseAddress
+} from 'starknet'
 
 export const getParsedAddress = (address?: string): string | null => {
   if (!address) {
     return null
   }
 
-  const parsedAddress = starknet.validateAndParseAddress(address)
+  const parsedAddress = validateAndParseAddress(address)
 
   if (!parsedAddress) {
     return null

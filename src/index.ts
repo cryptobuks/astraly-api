@@ -1,11 +1,12 @@
 import 'dotenv/config'
+
 import 'reflect-metadata'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'
 import bodyParser from 'koa-bodyparser'
 import cors from '@koa/cors'
 import { ApolloServer } from 'apollo-server-koa'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import { buildSchema } from './Utils/schema'
 import Logger from './Utils/Logger'
 import { globals } from './Utils/Globals'
@@ -40,7 +41,8 @@ const startServer = async (): Promise<void> => {
       if (jwtToken) {
         try {
           jwtToken = jwtToken.replace('Bearer ', '')
-          address = jwt.verify(jwtToken, globals.JWT_KEY) as string
+          const { data } = jwt.verify(jwtToken, globals.JWT_KEY) as JwtPayload
+          address = data
         } catch (e) {
           console.error('CTX, INVALID JWT')
         }
