@@ -16,7 +16,7 @@ type Account {
 
 type Mutation {
   addContact(email: String!): Boolean!
-  completeQuest(questId: String!): Quest!
+  completeQuest(questId: String!): Quest
   updateAccount(data: UpdateAccountInputType!): Account!
 }
 

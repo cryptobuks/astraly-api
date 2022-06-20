@@ -8,7 +8,7 @@ import { MerkleProofsModel } from './MerkleProofs.Entity'
 @Resolver()
 export class QuestResolvers {
   @Authorized()
-  @Mutation(() => Quest)
+  @Mutation(() => Quest, { nullable: true })
   async completeQuest(@Arg('questId') questId: string, @Ctx() { address }: AppContext): Promise<Quest> {
     const account = await AccountModel.findOne({
       address,
@@ -17,6 +17,7 @@ export class QuestResolvers {
     if (!account) {
       throw new Error('account not found')
     }
+
 
     const quest = await QuestModel.findById(questId).exec()
 
