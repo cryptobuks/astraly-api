@@ -4,6 +4,7 @@ import { AppContext } from '../../Utils/Types/context'
 import { AccountModel } from '../Account/Account.Entity'
 import { QuestHistoryModel } from './QuestHistory.Entity'
 import { MerkleProofsModel } from './MerkleProofs.Entity'
+import { UserAccess } from '../../Modules/Auth/AuthChecker'
 
 @Resolver()
 export class QuestResolvers {
@@ -61,5 +62,11 @@ export class QuestResolvers {
     }
 
     return proof
+  }
+
+  @Authorized([UserAccess.Admin])
+  @Mutation(() => Quest)
+  updateQuest() {
+
   }
 }
