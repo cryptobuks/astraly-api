@@ -26,9 +26,11 @@ app.use(
   })
 )
 
+const argv = process.argv.slice(2) || []
+const command = argv[0]
+
 const startServer = async (): Promise<void> => {
   await connectToDb(globals.DB_HOST, globals.DB_NAME)
-  await generateQuestsData()
 
   const schema = await buildSchema()
   const server = new ApolloServer({
@@ -74,4 +76,9 @@ const startServer = async (): Promise<void> => {
   // await initCheckpoint()
 }
 
-void startServer()
+if (command === 'generateQuests') {
+  void connectToDb(globals.DB_HOST, globals.DB_NAME).then(async () => await generateQuestsData())
+} else {
+  void startServer()
+}
+
