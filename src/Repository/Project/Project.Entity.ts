@@ -28,7 +28,7 @@ export enum ProjectType {
 }
 
 registerEnumType(ProjectType, {
-  name: 'ProjectType'
+  name: 'ProjectType',
 })
 
 @ObjectType()
@@ -141,7 +141,7 @@ export class Project {
   currentRoundIndex: number
 
   @Field(() => [String], { nullable: true })
-  @prop({ type: () => [String]})
+  @prop({ type: () => [String] })
   categories?: string[]
 
   @Field(() => [Round], { nullable: true })

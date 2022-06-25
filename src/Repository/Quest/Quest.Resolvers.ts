@@ -4,7 +4,8 @@ import { AppContext } from '../../Utils/Types/context'
 import { AccountModel } from '../Account/Account.Entity'
 import { QuestHistoryModel } from './QuestHistory.Entity'
 import { MerkleProofsModel } from './MerkleProofs.Entity'
-import { UserAccess } from '../../Modules/Auth/AuthChecker'
+// import { UserAccess } from '../../Modules/Auth/AuthChecker'
+import { validateAndParseAddress } from 'starknet'
 
 @Resolver()
 export class QuestResolvers {
@@ -19,7 +20,7 @@ export class QuestResolvers {
       throw new Error('account not found')
     }
 
-    if (account.questCompleted.map(x => String(x)).includes(questId)) {
+    if (account.questCompleted.map((x) => String(x)).includes(questId)) {
       throw new Error('quest already completed')
     }
 
@@ -44,8 +45,8 @@ export class QuestResolvers {
   }
 
   @Authorized()
-  @Query(() => String)
-  async getMerkleProof(@Arg('idoId') idoId: string, @Ctx() { address }: AppContext): Promise<string> {
+  @Query(() => [String])
+  async getMerkleProof(@Arg('idoId') idoId: string, @Ctx() { address }: AppContext): Promise<string[]> {
     const account = await AccountModel.findOne({
       address,
     }).exec()
@@ -54,11 +55,10 @@ export class QuestResolvers {
       throw new Error('account not found')
     }
 
-   const merkeProofs = await MerkleProofsModel.findOne({
-     idoId: Number(idoId),
-   }).exec()
-
-    const proof = merkeProofs.data[address]
+    const merkleProofs = await MerkleProofsModel.findOne({
+      idoId: Number(idoId),
+    }).exec()
+    const proof = merkleProofs.data[validateAndParseAddress(address)]
 
     if (!proof) {
       throw new Error('no proof found for address')
@@ -66,10 +66,4 @@ export class QuestResolvers {
 
     return proof
   }
-
-  // @Authorized([UserAccess.Admin])
-  // @Mutation(() => Quest)
-  // updateQuest() {
-  //
-  // }
 }
