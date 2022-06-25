@@ -79,6 +79,7 @@ export class AccountResolvers {
       address,
       bio: account.bio,
       alias: account.alias,
+      questCompleted: account.questCompleted,
     }
   }
 

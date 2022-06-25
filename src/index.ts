@@ -81,7 +81,6 @@ if (command === 'generateQuests') {
   void connectToDb(globals.DB_HOST, globals.DB_NAME).then(async () => await generateQuestsData())
 } else if (command === 'generateProjects') {
   void connectToDb(globals.DB_HOST, globals.DB_NAME).then(async () => await generateProjects())
-}else {
+} else {
   void startServer()
 }
-

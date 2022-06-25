@@ -96,13 +96,13 @@ enum ProjectType {
 
 type Query {
   getAccount(address: String!): Account!
-  getMerkleProof(idoId: String!): String!
+  getMerkleProof(idoId: String!): [String!]!
   getToken(address: String!): String!
   getUploadUrl(fileType: String!): JSON!
   hello: String!
   me: Account!
   nonce: Float!
-  project(_id: String!): Project!
+  project(idoId: String!): Project!
   projects: [Project!]!
   searchProjects(finished: Boolean, search: String): [Project!]!
 }
