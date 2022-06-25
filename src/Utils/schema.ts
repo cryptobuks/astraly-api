@@ -13,10 +13,19 @@ import { AccountFieldResolvers } from '../Repository/Account/Account.FieldResolv
 
 export const buildSchema = async (): Promise<GraphQLSchema> => {
   return await tsBuildSchema({
-    resolvers: [AuthResolvers, AccountResolvers, QuestResolvers, ContactResolvers, ProjectResolvers, FileResolvers, AccountFieldResolvers],
+    resolvers: [
+      AuthResolvers,
+      AccountResolvers,
+      QuestResolvers,
+      ContactResolvers,
+      ProjectResolvers,
+      FileResolvers,
+      AccountFieldResolvers,
+    ],
     validate: false,
     authChecker: appAuthChecker,
     scalarsMap: [
+      // @ts-expect-error
       { type: GraphQLJSON, scalar: GraphQLJSON },
     ],
     emitSchemaFile: path.resolve(__dirname, '../../schema.gql'),
