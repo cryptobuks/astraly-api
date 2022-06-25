@@ -67,9 +67,9 @@ export class QuestResolvers {
     return proof
   }
 
-  @Authorized([UserAccess.Admin])
-  @Mutation(() => Quest)
-  updateQuest() {
-
-  }
+  // @Authorized([UserAccess.Admin])
+  // @Mutation(() => Quest)
+  // updateQuest() {
+  //
+  // }
 }

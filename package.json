@@ -12,7 +12,8 @@
 		"lint:fix": "eslint --fix ./src",
 		"prettier": "prettier .",
 		"prettier:fix": "prettier --write ./src",
-		"generateQuests": "tsc && node dist/index.js generateQuests"
+		"generateQuests": "tsc && node dist/index.js generateQuests",
+		"generateProjects": "tsc && node dist/index.js generateProjects"
 	},
 	"keywords": [],
 	"author": "ZkPad",

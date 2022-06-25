@@ -100,6 +100,10 @@ export class Project {
   @prop()
   name: string
 
+  @Field({ nullable: true })
+  @prop()
+  description: string
+
   @Field(() => ProjectType, { nullable: true })
   @prop({ enum: ProjectType, type: String })
   type?: ProjectType
@@ -132,9 +136,9 @@ export class Project {
   @prop()
   maxAllocation?: number
 
-  @Field(() => ID, { nullable: true })
-  @prop({ type: () => String })
-  currentRoundId: ObjectId
+  @Field({ nullable: true })
+  @prop({})
+  currentRoundIndex: number
 
   @Field(() => [String], { nullable: true })
   @prop({ type: () => [String]})
@@ -143,6 +147,10 @@ export class Project {
   @Field(() => [Round], { nullable: true })
   @prop({ type: () => [Round] })
   rounds: Round[]
+
+  @Field({ nullable: true })
+  @prop({ default: false })
+  isFinished: boolean
 }
 
 export const ProjectModel = getModelForClass(Project, {

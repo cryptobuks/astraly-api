@@ -30,7 +30,6 @@ type Mutation {
   completeQuest(questId: String!): Quest
   updateAccount(data: UpdateAccountInputType!): Account!
   updateProject(data: ProjectInput!): Project
-  updateQuest: Quest!
 }
 
 type OrganizedEvent {
@@ -44,8 +43,10 @@ type Project {
   categories: [String!]
   cover: String
   created: DateTime
-  currentRoundId: ID
+  currentRoundIndex: Float
+  description: String
   idoId: String
+  isFinished: Boolean
   logo: String
   maxAllocation: Float
   name: String
@@ -93,8 +94,9 @@ type Query {
   hello: String!
   me: Account!
   nonce: Float!
+  project(_id: String!): Project!
   projects: [Project!]!
-  searchProjects(search: String!): [Project!]!
+  searchProjects(finished: Boolean, search: String): [Project!]!
 }
 
 type Quest {

@@ -7,11 +7,17 @@ import { ProjectInput } from './Project.InputTypes'
 @Resolver()
 export class ProjectResolvers {
     @Query(() => [Project])
-    async searchProjects (@Arg('search') search?: string): Promise<Array<DocumentType<Project>>>{
+    async searchProjects (@Arg('finished', { nullable: true }) finished?: boolean ,@Arg('search', { nullable: true }) search?: string): Promise<Array<DocumentType<Project>>>{
         const regex = new RegExp(`${search}`, 'ig')
         return await ProjectModel.find({
-            name: regex
+            ...(search ? { name: regex } : {}),
+            isFinished: finished
         }).exec()
+    }
+
+    @Query(() => Project)
+    async project (@Arg('_id') _id: string): Promise<DocumentType<Project>> {
+        return await ProjectModel.findById(_id).exec()
     }
 
     @Authorized([UserAccess.Admin])

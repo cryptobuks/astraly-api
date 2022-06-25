@@ -14,6 +14,7 @@ import { globals } from './Utils/Globals'
 import { connectToDb } from './Utils/Db'
 import { initGlobals } from './Utils/Globals/init'
 import { generateQuestsData } from './Utils/Seed/generateQuestsData'
+import { generateProjects } from './Utils/Seed/generateProjects'
 
 initGlobals()
 
@@ -78,7 +79,9 @@ const startServer = async (): Promise<void> => {
 
 if (command === 'generateQuests') {
   void connectToDb(globals.DB_HOST, globals.DB_NAME).then(async () => await generateQuestsData())
-} else {
+} else if (command === 'generateProjects') {
+  void connectToDb(globals.DB_HOST, globals.DB_NAME).then(async () => await generateProjects())
+}else {
   void startServer()
 }
 
