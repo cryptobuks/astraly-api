@@ -17,7 +17,6 @@ export const buildSchema = async (): Promise<GraphQLSchema> => {
     validate: false,
     authChecker: appAuthChecker,
     scalarsMap: [
-      // @ts-expect-error
       { type: GraphQLJSON, scalar: GraphQLJSON },
     ],
     emitSchemaFile: path.resolve(__dirname, '../../schema.gql'),
