@@ -2,7 +2,7 @@ import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql'
 import { Account, AccountModel } from './Account.Entity'
 import { Context } from 'koa'
 import { UpdateAccountInputType } from './AccountInputTypes'
-import { validateSignature } from '../../Utils/Starknet/validateSignature'
+// import { validateSignature } from '../../Utils/Starknet/validateSignature'
 import { AppFileModel } from '../File/File.Entity'
 
 @Resolver()
@@ -15,7 +15,6 @@ export class AccountResolvers {
   @Authorized()
   @Mutation(() => Account)
   async updateAccount(@Arg('data') data: UpdateAccountInputType, @Ctx() { address }: Context): Promise<Account> {
-
     // const account = AccountModel.findOne({
     //     address
     // }).exec()
@@ -28,10 +27,7 @@ export class AccountResolvers {
     //     throw new Error('could not find account',)
     // }
 
-    const {
-      alias: _a,
-      ...savableData
-    } = data
+    const { alias: _a, ...savableData } = data
 
     if (savableData.cover) {
       const file = await AppFileModel.findById(savableData.cover).exec()
@@ -49,7 +45,7 @@ export class AccountResolvers {
         address,
       },
       {
-       ...savableData
+        ...savableData,
       },
       {
         new: true,
