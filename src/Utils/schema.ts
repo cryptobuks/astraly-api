@@ -14,7 +14,16 @@ import { ProjectFieldResolvers } from '../Repository/Project/Project.FieldResolv
 
 export const buildSchema = async (): Promise<GraphQLSchema> => {
   return await tsBuildSchema({
-    resolvers: [AuthResolvers, AccountResolvers, QuestResolvers, ContactResolvers, ProjectResolvers, FileResolvers, AccountFieldResolvers, ProjectFieldResolvers],
+    resolvers: [
+      AuthResolvers,
+      AccountResolvers,
+      QuestResolvers,
+      ContactResolvers,
+      ProjectResolvers,
+      FileResolvers,
+      AccountFieldResolvers,
+      ProjectFieldResolvers
+    ],
     validate: false,
     authChecker: appAuthChecker,
     scalarsMap: [
