@@ -10,10 +10,11 @@ import { ProjectResolvers } from '../Repository/Project/Project.Resolvers'
 import { FileResolvers } from '../Modules/Files/File.Resolvers'
 import { GraphQLJSON } from 'graphql-type-json'
 import { AccountFieldResolvers } from '../Repository/Account/Account.FieldResolvers'
+import { ProjectFieldResolvers } from '../Repository/Project/Project.FieldResolvers'
 
 export const buildSchema = async (): Promise<GraphQLSchema> => {
   return await tsBuildSchema({
-    resolvers: [AuthResolvers, AccountResolvers, QuestResolvers, ContactResolvers, ProjectResolvers, FileResolvers, AccountFieldResolvers],
+    resolvers: [AuthResolvers, AccountResolvers, QuestResolvers, ContactResolvers, ProjectResolvers, FileResolvers, AccountFieldResolvers, ProjectFieldResolvers],
     validate: false,
     authChecker: appAuthChecker,
     scalarsMap: [

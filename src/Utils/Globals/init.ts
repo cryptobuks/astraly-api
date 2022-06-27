@@ -1,7 +1,7 @@
 import { globals } from './index'
 import aws from 'aws-sdk'
 
-export const initGlobals = async (): Promise<void> => {
+export const initGlobals = (): void => {
   globals.APP_URL = process.env.APP_URL
   globals.PORT = process.env.PORT
   globals.HOST = process.env.HOST
