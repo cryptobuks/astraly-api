@@ -114,6 +114,7 @@ type Query {
   getToken(address: String!): String!
   getUploadUrl(fileType: String!): JSON!
   hello: String!
+  isAdmin: Boolean!
   me: Account!
   nonce: Float!
   project(idoId: String!): Project!

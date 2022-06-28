@@ -9,7 +9,7 @@ export class Globals {
     PORT = '4002'
     HOST = 'localhost'
     AdminAddresses = [
-        '0x02356b628d108863Baf8644C945d97bAD70190aF5957031F4852D00D0f690a77', 
+        '0x02356b628d108863Baf8644C945d97bAD70190aF5957031F4852D00D0f690a77',
         '0x01945c5e4fd3697fe488236b4dcfc55e8bc4fe3504af6658a2ae135e166bd073',
     ].map((a) => a.toLowerCase())
 
