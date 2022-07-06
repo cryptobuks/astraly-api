@@ -35,11 +35,9 @@ export class Account {
 
   @Field({ nullable: true })
   @prop({
-    default() {
-      Math.floor(Math.random() * 9999999)
-    },
+    default: false,
   })
-  nonce!: number
+  hasClaimedTickets?: boolean
 
   @Field(() => [Quest], { nullable: true })
   @prop({ ref: 'Quest' })
