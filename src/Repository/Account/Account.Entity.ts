@@ -45,7 +45,7 @@ export class Account {
   @prop({ ref: 'Quest' })
   questCompleted?: Array<Ref<Quest>>
 
-  @prop({ ref: 'AppFile'})
+  @prop({ ref: 'AppFile' })
   cover: Ref<AppFile>
 
   @Field({ nullable: true })

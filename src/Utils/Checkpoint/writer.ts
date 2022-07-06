@@ -1,22 +1,21 @@
-import { validateAndParseAddress } from 'starknet/utils/address'
+// import { validateAndParseAddress } from 'starknet/utils/address'
 import { ProjectModel } from '../../Repository/Project/Project.Entity'
+// import { AccountModel } from '../../Repository/Account/Account.Entity'
 
-export async function handleNewIDO({ block, tx, receipt, mysql }): Promise<void> {
-  console.log('Handle New IDO', receipt.events)
-  const idoId = BigInt(receipt.events[0].data[0]).toString()
-  const idoAddress = validateAndParseAddress(receipt.events[0].data[1])
+export async function handleLotteryTicketMint({ receipt }): Promise<void> {
+  console.log('Handle Lottery Ticket Mint', receipt.events)
+  const idoId = BigInt(receipt.events[0].data[3]).toString()
+  const amountMinted = BigInt(receipt.events[0].data[4]).toString()
+  // const toAddress = validateAndParseAddress(receipt.events[0].data[1])
 
-  const item = {
-    idoId,
-    tokenAddress: idoAddress,
-    tx: tx.transaction_hash,
-    created: block.timestamp,
-  }
+  // const item = {
+  //   idoId,
+  //   mintedTo: toAddress,
+  //   amountMinted,
+  //   tx: tx.transaction_hash,
+  //   mintedAt: block.timestamp,
+  // }
 
-  await ProjectModel.create(item)
-
-  const query = `
-    INSERT IGNORE INTO projects SET ?;
-  `;
-  await mysql.queryAsync(query, [item]);
+  const _project = await ProjectModel.findOne({ idoId }).exec()
+  await ProjectModel.updateOne({ idoId }, { totalClaimedTickets: _project.totalClaimedTickets + Number(amountMinted) })
 }

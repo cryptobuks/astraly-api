@@ -87,6 +87,7 @@ type Project {
   ticker: String
   tokenAddress: String
   tokenPrice: Float
+  totalClaimedTickets: Float
   totalRaise: Float
   tx: String
   type: ProjectType
