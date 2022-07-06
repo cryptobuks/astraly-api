@@ -64,7 +64,9 @@ export class AccountResolvers {
   async me(@Ctx() { address }: Context): Promise<Account> {
     return await AccountModel.findOne({
       address,
-    }).exec()
+    })
+      .populate('transactions')
+      .exec()
   }
 
   @Query(() => Account)

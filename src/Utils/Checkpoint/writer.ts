@@ -65,7 +65,7 @@ export async function handleVaultDeposit({ receipt, tx, block }): Promise<void> 
 
     // Add Transaction to History
     const newTx = await TransactionModel.create(_tx)
-    await AccountModel.updateOne({ address: receiver }, { $push: { transactions: newTx } })
+    await AccountModel.updateOne({ address: receiver }, { $push: { transactions: newTx } }).exec()
   } catch (error) {
     console.error(error)
   }
