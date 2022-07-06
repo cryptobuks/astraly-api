@@ -12,8 +12,9 @@ type Account {
   bio: String
   cover: String
   email: String
-  nonce: Float
+  hasClaimedTickets: Boolean
   questCompleted: [Quest!]
+  transactions: [Transaction!]
 }
 
 type CallData {
@@ -129,7 +130,6 @@ type Query {
   hello: String!
   isAdmin: Boolean!
   me: Account!
-  nonce: Float!
   project(idoId: String!): Project!
   projects: [Project!]!
   quest(_id: String!): Quest!
@@ -179,6 +179,14 @@ input RoundInput {
   endDate: DateTime
   startDate: DateTime
   title: String
+}
+
+type Transaction {
+  _id: ID!
+  contractAddress: String
+  hash: String
+  name: String
+  timestamp: DateTime
 }
 
 type Uint256 {
