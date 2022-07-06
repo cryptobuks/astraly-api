@@ -183,6 +183,7 @@ input RoundInput {
 
 type Transaction {
   _id: ID!
+  callerAddress: String
   contractAddress: String
   hash: String
   name: String

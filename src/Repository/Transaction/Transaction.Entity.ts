@@ -13,6 +13,10 @@ export class Transaction {
 
   @Field({ nullable: true })
   @prop()
+  callerAddress!: string
+
+  @Field({ nullable: true })
+  @prop()
   hash!: string
 
   @Field({ nullable: true })
