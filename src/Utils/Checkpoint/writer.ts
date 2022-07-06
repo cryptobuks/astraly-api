@@ -2,8 +2,9 @@ import { ethers } from 'ethers'
 import { AccountModel } from '../../Repository/Account/Account.Entity'
 import { validateAndParseAddress } from 'starknet/utils/address'
 import { ProjectModel } from '../../Repository/Project/Project.Entity'
+import { TransactionModel } from '../../Repository/Transaction/Transaction.Entity'
 
-export async function handleTransferSingle({ receipt }): Promise<void> {
+export async function handleTransferSingle({ receipt, tx, block }): Promise<void> {
   // console.log('Handle Lottery Ticket Mint', receipt.events)
   const idoId = BigInt(receipt.events[0].data[3]).toString() // Uint256
   const amount = BigInt(receipt.events[0].data[5]).toString() // Uint256
@@ -11,61 +12,69 @@ export async function handleTransferSingle({ receipt }): Promise<void> {
   const to = validateAndParseAddress(receipt.events[0].data[2])
   // const toAddress = validateAndParseAddress(receipt.events[0].data[1])
 
-  // const item = {
-  //   idoId,
-  //   mintedTo: toAddress,
-  //   amountMinted,
-  //   tx: tx.transaction_hash,
-  //   mintedAt: block.timestamp,
-  // }
-
   if (Number(from) === 0) {
     // Tickets being claimed
     const _project = await ProjectModel.findOne({ idoId }).exec()
     await ProjectModel.updateOne({ idoId }, { totalClaimedTickets: _project.totalClaimedTickets + Number(amount) })
     await AccountModel.updateOne({ address: to }, { hasClaimedTickets: true })
+    const _tx = {
+      hash: tx.transaction_hash,
+      timestamp: block.timestamp,
+      contractAddress: tx.contract_address,
+      name: 'Claim Tickets',
+    }
+    // Add Transaction to History
+    await TransactionModel.create(_tx)
   } else if (Number(to) === 0) {
     // Tickets being burned
     // const _project = await ProjectModel.findOne({ idoId }).exec()
     // const _account = await AccountModel.findOne({ address: from }).exec()
     // await AccountModel.updateOne({ address: from }, {})
+    const _tx = {
+      hash: tx.transaction_hash,
+      timestamp: block.timestamp,
+      contractAddress: tx.contract_address,
+      name: 'Burn Tickets',
+    }
+    // Add Transaction to History
+    await TransactionModel.create(_tx)
   }
 }
 
-export async function handleVaultDeposit({ receipt }): Promise<void> {
+export async function handleVaultDeposit({ receipt, tx, block }): Promise<void> {
   // console.log('Handle Vault Deposit', receipt.events)
   const receiver = validateAndParseAddress(receipt.events[3].data[1])
   const assets = BigInt(receipt.events[3].data[2]).toString()
   const shares = BigInt(receipt.events[3].data[4]).toString()
   console.log(receiver, ethers.utils.formatUnits(assets, 'ether'), ethers.utils.formatUnits(shares, 'ether'))
 
-  // const item = {
-  //   idoId,
-  //   mintedTo: toAddress,
-  //   amountMinted,
-  //   tx: tx.transaction_hash,
-  //   mintedAt: block.timestamp,
-  // }
+  const _tx = {
+    hash: tx.transaction_hash,
+    timestamp: block.timestamp,
+    name: 'Deposit',
+    contractAddress: tx.contract_address,
+  }
 
-  //
+  // Add Transaction to History
+  await TransactionModel.create(_tx)
 }
 
-export async function handleVaultWithdraw({ receipt }): Promise<void> {
+export async function handleVaultWithdraw({ receipt, tx, block }): Promise<void> {
   // console.log('Handle Vault Deposit', receipt.events)
   const receiver = validateAndParseAddress(receipt.events[3].data[2])
   const assets = BigInt(receipt.events[3].data[3]).toString()
   const shares = BigInt(receipt.events[3].data[5]).toString()
   console.log(receiver, ethers.utils.formatUnits(assets, 'ether'), ethers.utils.formatUnits(shares, 'ether'))
 
-  // const item = {
-  //   idoId,
-  //   mintedTo: toAddress,
-  //   amountMinted,
-  //   tx: tx.transaction_hash,
-  //   mintedAt: block.timestamp,
-  // }
+  const _tx = {
+    hash: tx.transaction_hash,
+    timestamp: block.timestamp,
+    name: 'Withdraw',
+    contractAddress: tx.contract_address,
+  }
 
-  //
+  // Add Transaction to History
+  await TransactionModel.create(_tx)
 }
 
 export async function handleDeploy(): Promise<void> {

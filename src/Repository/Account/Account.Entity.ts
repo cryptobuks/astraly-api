@@ -2,6 +2,7 @@ import { getModelForClass, prop, Ref } from '@typegoose/typegoose'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { ObjectId } from '../../Utils/Types'
 import { Quest } from '../Quest/Quest.Entity'
+import { Transaction } from '../Transaction/Transaction.Entity'
 import { ModelType } from '@typegoose/typegoose/lib/types'
 import { AppFile } from '../File/File.Entity'
 
@@ -42,6 +43,10 @@ export class Account {
   @Field(() => [Quest], { nullable: true })
   @prop({ ref: 'Quest' })
   questCompleted?: Array<Ref<Quest>>
+
+  @Field(() => [Transaction], { nullable: true })
+  @prop({ ref: 'Transaction' })
+  transactions?: Array<Ref<Transaction>>
 
   @prop({ ref: 'AppFile' })
   cover: Ref<AppFile>
