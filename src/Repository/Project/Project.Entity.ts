@@ -18,7 +18,7 @@ export class Round {
 
   @Field({ nullable: true })
   @prop()
-  endDate: Date
+  endDate?: Date
 }
 
 export enum ProjectType {
